@@ -30,24 +30,3 @@ hotel = {
     ]
 }
 print(hotel)
-
-# 2-Cree un programa que cree un diccionario usando dos listas del mismo tamaño, usando una para sus keys, y la otra para sus values.
-country = ['Costa Rica', 'Argentina', 'Spain']
-capital = ['San Jose', 'Buenos Aires', 'Madrid']
-
-
-place = dict(zip(country, capital))
-print(place)
-
-# 3-Cree un programa que use una lista para eliminar keys de un diccionario.
-employee = {
-    'name': 'Robinson',
-    'email': 'Robinson@gmail.com',
-    'level': 1,
-    'age': 32
-}
-
-list_of_keys = ['level', 'age']
-for key in list_of_keys:
-    employee.pop(key) 
-print(employee)

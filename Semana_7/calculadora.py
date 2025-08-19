@@ -1,4 +1,4 @@
-Cree una calculadora por linea de comando. Esta debe de tener un número actual, y un menú para decidir qué operación hacer con otro número:
+#Cree una calculadora por linea de comando. Esta debe de tener un número actual, y un menú para decidir qué operación hacer con otro número:
 def show_menu(current_number):
     print("\n===== CALCULATOR =====")
     print(f"Current number: {current_number}")
