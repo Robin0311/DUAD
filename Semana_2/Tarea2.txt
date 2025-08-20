@@ -1,0 +1,55 @@
+1. Cree un pseudocódigo que le pida un `precio de producto` al usuario, calcule su descuento y muestre el precio final tomando en cuenta que:
+
+inicio
+definir precio del producto
+definir descuento
+definir precio final
+mostrar "cual es el precio del producto"
+pedir precio del producto
+si (precio del producto < 100) entonces:
+a.descuento = precio del producto * 0.02
+sino
+[a.si](http://a.si/) (precio el producto >= 100) entonces:
+descuento = precio del producto * 0.1
+FInsi
+precio final = precio el producto - descuento
+mostrar "el precio el producto es:"
+mostrar precio final
+
+fin
+
+1. Cree un pseudocódigo que le pida un `tiempo en segundos` al usuario y calcule si es menor o mayor a 10 minutos. Si es menor, muestre cuantos segundos faltarían para llegar a 10 minutos. Si es mayor, muestre “*Mayor*”. Si es exactamente igual, muestre “*Igual*”.
+
+inicio
+definir
+definir tiempo
+definir diferencia
+mostrar "dime un tiempo en segundos"
+pedir tiempo
+definir minutos_10_en_segundos = 10 * 60
+si (tiempo < minutos_10_en_segundos) entonces:
+diferencia = minutos_10_en_segundos - tiempo
+mostrar "Faltan" diferencia, "segundo para llegar a 10min"
+sino
+si (tiempo > minutos_10_en_segundos)entonces:
+mostrar "mayor"
+sino (tiempo == minutos_10_en_segundos) entonces:
+mostar "igual"
+Finsi
+
+fin
+
+1. Cree un algoritmo que le pida un numero al usuario, y realice una suma de cada numero del 1 hasta ese número ingresado. Luego muestre el resultado de la suma.
+
+inicio
+definir suma = 0
+mostrar "ingrese un numero:"
+definir numero
+definir i = 1
+mientras que (i <= numero) repetir:
+suma = suma + i
+i = i + 1
+FinMientras
+
+mostrar "La suma de los números del 1 al ", numero, " es: ", suma
+fin

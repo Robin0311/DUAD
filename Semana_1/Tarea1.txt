@@ -1,0 +1,62 @@
+1. Inicio
+2. Encender computadora.
+3. Verificar que el dispositivo tenga conexión a internet.
+4. Si hay conexion a internet:
+    
+    i. abrir el google
+    
+    Sino:
+    
+    ii.  Conectarse a una red Wi-Fi o activar datos móviles y volver a intentarlo
+    
+5. Esperar a que la página  cargue por completo.
+6. Escribir en la barra de busqueda youtube y darle clic.
+7. Escribir el nombre o título del video que quiero ver.
+8. Presionar la tecla "Enter" o el ícono de lupa para buscar.
+9. Esperar a que aparezcan los resultados.
+10. Hacer clic o tocar el video seleccionado.
+11. Esperar a que el video comience a cargar.
+12. Si aparece un anuncio:
+i. Si hay opción de "Saltar anuncio" hacer clic en “saltar anuncio”
+Sino:
+    
+    ii. Esperar que termine el anuncio.
+    
+13. Mirar el video.
+14. Fin
+
+Rutina diaria
+
+1. Inicio
+2. Despertar 
+3. Si al despertar son las 7am:
+    1. Levantarse
+    
+    Sino:
+    
+    ii. Continuar durmiendo hasta las 7am.
+    
+4. Bañarme y estar listo para el trabajo
+5. Ir a la cocina y abrir refri.
+6. Si hay leche en la refrigeradora.
+    1. Tomarla y colocarla en la mesa
+    
+    Sino:
+    
+    ii.  Preparar un sandwich
+    
+7. abrir el gabinete
+8. Tomar el cereal 
+9. Tomar el plato
+10.  Preparar el cereal.
+11. Ir al carro
+12. Encender el carro
+13. Mientras el carro enciende:
+
+i. Ajustar el asciento.
+
+ii. Colocar cinturon
+
+14.Manejar al trabajo.
+
+15.Fin
