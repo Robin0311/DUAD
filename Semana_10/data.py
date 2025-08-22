@@ -1,15 +1,16 @@
 import csv
 import os
 
-FILE_NAME = "students.csv"
+
 
 def export_csv(students: list) -> None:
+    file_name = "students.csv"
     if not students:
         print("No data to export.")
         return
 
     fieldnames = ["name", "section", "spanish", "english", "social", "science", "average"]
-    with open(FILE_NAME, mode="w", newline="", encoding="utf-8") as f:
+    with open(file_name, mode="w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for s in students:
@@ -22,16 +23,17 @@ def export_csv(students: list) -> None:
                 "science": s["science"],
                 "average": s["average"],
             })
-    print(f"Data exported to {FILE_NAME}")
+    print(f"Data exported to {file_name}")
 
 
 def import_csv() -> list:
-    if not os.path.exists(FILE_NAME):
+    file_name = "students.csv"
+    if not os.path.exists(file_name):
         print("No previously exported CSV file found.")
         return []
 
     students = []
-    with open(FILE_NAME, mode="r", encoding="utf-8") as f:
+    with open(file_name, mode="r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
@@ -52,5 +54,5 @@ def import_csv() -> list:
                 "science": row["science"],
                 "average": row["average"],
             })
-    print(f"Data imported from {FILE_NAME}")
+    print(f"Data imported from {file_name}")
     return students
