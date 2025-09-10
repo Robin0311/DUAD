@@ -1,17 +1,23 @@
-def count_calls(func):
-    count = 0
+def print_params_functions(func):
     def wrapper(*args, **kwargs):
-        nonlocal count
-        count += 1
-        print(f"{func.__name__} has been called {count} times")
-        return func(*args, **kwargs)
+        if args:
+            print(f"args: {args}")
+        if kwargs:
+            print(f"kwargs: {kwargs}")
+        result = func(*args, **kwargs)
+        print(f"Result: {result}")
+        return result
+
     return wrapper
 
+@print_params_functions
+def sum_params(a, b):
+    return a + b
 
-@count_calls
-def greet(name):
-    return f"Hello, {name}!"
+@print_params_functions
+def introduction(age, name):
+    return f"Hi my name is {name} and im {age} years old"
 
-print(greet("Robinson"))
-print(greet("Bryan"))
 
+sum_params(5, 3)
+introduction(32, name="Robinson")
