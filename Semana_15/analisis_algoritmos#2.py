@@ -24,9 +24,9 @@ result = check_if_lists_have_an_equal(list_a, list_b) # O(1)
 print(result)                          # O(1)
 
 # print_10_or_less_elements
-def print_10_or_less_elements(list_to_print): # O(n)
+def print_10_or_less_elements(list_to_print): # O(1)
     list_len = len(list_to_print)       # O(1)
-    for index in range(min(list_len, 10)): # O(n)
+    for index in range(min(list_len, 10)): # O(1)
         print(list_to_print[index])     # O(1)
 
 my_list = [1,2,3,4,5,6,7,8,9,10,11]   # O(1)
