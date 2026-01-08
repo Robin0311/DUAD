@@ -1,8 +1,10 @@
 import FreeSimpleGUI as sg
 import interfaces
-import logic
 import finance_manager as fm
 import persistence
+from models import Movement
+from validators import validate_movement_data, ValidationError
+
 
 # INITIAL CONFIGURATION
 
@@ -30,8 +32,9 @@ manager = fm.FinanceManager()
 # LOAD DATA
 
 manager.categories, manager.movements = persistence.load()
-table_data = list(manager.movements)
+table_data = [m.to_row() for m in manager.movements]
 main_window["globalTable"].update(values=table_data)
+
 
 # BUTTON STATE
 
@@ -41,33 +44,6 @@ def update_button_state():
     main_window["btnExpense"].update(disabled=not has_categories)
 
 update_button_state()
-
-# VALIDATIONS
-
-def validate_movement(values):
-    description = (values.get("description") or "").strip()
-    amount_text = (values.get("amount") or "").strip()
-    category = values.get("comboCategories")
-
-    if not description:
-        sg.popup_error("Description cannot be empty.")
-        return None
-
-    if not amount_text:
-        sg.popup_error("Amount cannot be empty.")
-        return None
-
-    try:
-        amount = float(amount_text)
-    except ValueError:
-        sg.popup_error("Amount must be a number.")
-        return None
-
-    if not category or category == "Open to see more options":
-        sg.popup_error("You must select a category.")
-        return None
-
-    return description, amount, category
 
 
 while True:
@@ -82,15 +58,15 @@ while True:
 
         if event == "btnIncome" and income_window is None:
             ui = interfaces.Interfaces("Income")
-            income_window = ui.create_window(manager.categories)
+            income_window = ui.create_window(manager.get_category_names())
 
         if event == "btnExpense" and expense_window is None:
             ui = interfaces.Interfaces("Expense")
-            expense_window = ui.create_window(manager.categories)
+            expense_window = ui.create_window(manager.get_category_names())
 
         if event == "btnCategory" and category_window is None:
             ui = interfaces.Interfaces("category")
-            category_window = ui.create_window(manager.categories)
+            category_window = ui.create_window(manager.get_category_names())
 
     # INCOME WINDOW
     elif window == income_window:
@@ -100,19 +76,20 @@ while True:
             income_window = None
 
         elif event == "Confirm Income":
-            data = validate_movement(values)
-            if data:
-                description, amount, category = data
-                income = logic.Logic("Income", description, amount, category)
-                movement = income.create_movement()
+            try:
+                description, amount, category = validate_movement_data(values)
+                movement = Movement("Income", description, amount, category)
+            except ValidationError as e:
+                sg.popup_error(str(e))
+                continue
 
-                manager.add_movement(movement)
-                table_data.append(movement)
-                main_window["globalTable"].update(values=table_data)
+            manager.add_movement(movement)
+            table_data.append(movement.to_row())
+            main_window["globalTable"].update(values=table_data)
 
-                persistence.save(manager.categories, manager.movements)
-                window.close()
-                income_window = None
+            persistence.save(manager.categories, manager.movements)
+            window.close()
+            income_window = None
 
     # EXPENSE WINDOW
     elif window == expense_window:
@@ -122,19 +99,20 @@ while True:
             expense_window = None
 
         elif event == "Confirm Expense":
-            data = validate_movement(values)
-            if data:
-                description, amount, category = data
-                expense = logic.Logic("Expense", description, amount, category)
-                movement = expense.create_movement()
+            try:
+                description, amount, category = validate_movement_data(values)
+                movement = Movement("Expense", description, amount, category)
+            except ValidationError as e:
+                sg.popup_error(str(e))
+                continue
 
-                manager.add_movement(movement)
-                table_data.append(movement)
-                main_window["globalTable"].update(values=table_data)
+            manager.add_movement(movement)
+            table_data.append(movement.to_row())
+            main_window["globalTable"].update(values=table_data)
 
-                persistence.save(manager.categories, manager.movements)
-                window.close()
-                expense_window = None
+            persistence.save(manager.categories, manager.movements)
+            window.close()
+            expense_window = None
 
     # CATEGORY WINDOW
     elif window == category_window:
@@ -145,20 +123,22 @@ while True:
 
         elif event == "Confirm category":
             name = (values.get("categoryName") or "").strip()
-
             if not name:
                 sg.popup_error("Category name cannot be empty.")
                 continue
 
-            manager.add_category(name)
-            persistence.save(manager.categories, manager.movements)
+            added = manager.add_category(name)
+            if not added:
+                sg.popup_error("That category already exists (or is invalid).")
+                continue
 
+            persistence.save(manager.categories, manager.movements)
             update_button_state()
 
             if income_window:
-                income_window["comboCategories"].update(values=manager.categories)
+                income_window["comboCategories"].update(values=manager.get_category_names())
             if expense_window:
-                expense_window["comboCategories"].update(values=manager.categories)
+                expense_window["comboCategories"].update(values=manager.get_category_names())
 
             window.close()
             category_window = None
