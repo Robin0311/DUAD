@@ -1,6 +1,4 @@
 -- SQLite
--- SQLite
-
 -- TABLA DE producto y Datos de ejemplo
 
 -- CREATE TABLE producto (
@@ -24,19 +22,19 @@
 
 -- CREATE TABLE facturas (
 --     id INTEGER PRIMARY KEY AUTOINCREMENT,
---     codigo_vendedor INTEGER NOT NULL,
 --     correo_comprador VARCHAR(35) NOT NULL,
 --     fecha_compra DATE NOT NULL,
---     monto_total REAL NOT NULL,
---     telefono_comprador BIGINT NOT NULL
+--     monto_total REAL NOT NULL
 --     );
 
 -- INSERT INTO facturas (codigo_vendedor, correo_comprador, fecha_compra, monto_total, telefono_comprador) VALUES
--- ('1', 'john.doe@example.com', '2024-06-01', 1200.00, 1234567890),
--- ('2', 'robinson@gmail.com', '2024-06-02', 800.00, 9876543210),
--- ('3', 'maria.gonzalez@ehotmail.com', '2024-06-03', 500.00, 5555555555),
--- ('4', 'bryan@gmail.com', '2024-06-04', 250.00, 1111111111),
--- ('5', 'tabata@gmail.com', '2024-06-05', 300.00, 2222222222);
+-- (101, 'john.doe@example.com', '2024-06-01', 1200.00, '+34 657655231'),
+-- (102, 'robinson@gmail.com', '2024-06-02', 800.00, '+506 987654321'),
+-- (103, 'tabata@gmail.com', '2024-06-01', 1200.00, '+360 1234567'),
+-- (104, 'bryan@gmail.com', '2024-06-02', 800.00, '+516 9876543'),
+-- (105, 'alex@gmail.com', '2024-06-01', 1200.00, '+43 12345678'),
+-- (106, 'Isabel@gmail.com', '2024-06-02', 800.00, '+88 9876543210');
+
 
 
 -- TABLA DE factura producto y Datos de ejemplo
@@ -96,36 +94,52 @@
 -- (5, 1),
 -- (5, 3);
 
+--3-Utilizando el comando ALTER, modifique la tabla de Facturas y agregue una columna para almacenar también el número de teléfono del comprador, y otra para el código de empleado del cajero que realizó la venta.
+
+-- ALTER TABLE facturas
+-- ADD COLUMN codigo_vendedor INTEGER NOT NULL DEFAULT '0';
+
+-- ALTER TABLE facturas
+-- ADD COLUMN telefono_comprador TEXT NOT NULL DEFAULT 'NO REGISTRADO';
+
+
 --- 4- Realice los siguientes SELECT:
 
----Obtenga todos los productos almacenados
+---1- Obtenga todos los productos almacenados
 -- SELECT * FROM producto;
 
---Obtenga todos los productos que tengan un precio mayor a 50000 (modifico a 500 porque no coloque nada mayor a 5000)
+--2- Obtenga todos los productos que tengan un precio mayor a 50000 (modifico a 500 porque no coloque nada mayor a 5000)
 -- SELECT * FROM producto WHERE precio > 500.00;
 
--- Obtenga todas las compras de un mismo producto por id.
+--3- Obtenga todas las compras de un mismo producto por id.
 -- SELECT id_producto, SUM(cantidad_comprada) AS total_comprado
 -- FROM factura_producto
+-- WHERE id_producto = 4
 -- GROUP BY id_producto;
 
---Obtenga todas las compras agrupadas por producto, donde se muestre el total comprado entre todas las compras.
+--4- Obtenga todas las compras agrupadas por producto, donde se muestre el total comprado entre todas las compras.
 -- SELECT nombre, SUM(cantidad_comprada) AS total_comprado  FROM factura_producto
 -- JOIN producto ON factura_producto.id_producto = producto.id
 -- GROUP BY producto.nombre;
 
---Obtenga todas las facturas realizadas por el mismo comprador
--- SELECT correo_comprador, SUM(cantidad_comprada) AS cantidad_comprada FROM factura_producto
--- JOIN facturas ON factura_producto.id_factura = facturas.id
--- GROUP BY facturas.correo_comprador;
+--5- Obtenga todas las facturas realizadas por el mismo comprador
+-- SELECT facturas.id, facturas.correo_comprador, SUM(factura_producto.cantidad_comprada) AS total_cantidad_comprada
+-- FROM facturas
+-- INNER JOIN factura_producto
+-- ON facturas.id = factura_producto.id_factura
+-- WHERE facturas.id = 4
+-- GROUP BY facturas.id, facturas.correo_comprador;
 
--- Obtenga todas las facturas ordenadas por monto total de forma descendente
+--6- Obtenga todas las facturas ordenadas por monto total de forma descendente
 -- SELECT correo_comprador, SUM(cantidad_comprada) AS cantidad_comprada  FROM factura_producto
 -- JOIN facturas ON factura_producto.id_factura = facturas.id
 -- GROUP BY  facturas.correo_comprador
 -- ORDER BY cantidad_comprada DESC;
 
---Obtenga una sola factura por número de factura.
+--7- Obtenga una sola factura por número de factura.
 -- SELECT *
 -- FROM facturas
--- WHERE id = 3;
+-- WHERE id = 3; 
+
+
+
